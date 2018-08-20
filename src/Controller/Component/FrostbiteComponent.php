@@ -17,6 +17,10 @@ class FrostbiteComponent extends Component {
 
     protected $socket = null;
 
+    protected $errno = null;
+
+    protected $errstr = null;
+
     protected $data = '';
 
     protected $data2 = [];
@@ -33,12 +37,16 @@ class FrostbiteComponent extends Component {
      */
     public function connect($server, $port) {
 
-        $errno = null;
-        $errstr = null;
+        $this->socket = fsockopen($this->protocol . "://" . $server, $port, $this->errno, $this->errstr, 2);
 
-        $this->socket = fsockopen($this->protocol . "://" . $server, $port, $errno, $errstr, 2);
+        if ( ! $this->socket) {
+            return false;
+        }
 
         stream_set_blocking($this->socket, 0);
+        
+        return true;
+
     }
 
     /**
