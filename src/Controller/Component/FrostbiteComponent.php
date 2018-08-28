@@ -129,7 +129,7 @@ class FrostbiteComponent extends Component {
     }
 
     private function _close() {
-        if ( ! is_null($this->socket)) {
+        if ( ! is_null($this->socket) && $this->socket !== false) {
             fclose($this->socket);
             $this->socket = null;
         }
