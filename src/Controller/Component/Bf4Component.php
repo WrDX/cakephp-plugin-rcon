@@ -60,12 +60,18 @@ class Bf4Component extends Component {
     public function connect($server, $port, $password = null) {
 
         # Connect
-        $this->Frostbite->connect($server, $port);
+        if ( ! $this->Frostbite->connect($server, $port)) {
+            return false;
+        }
 
         # Login
         if ($password) {
-            $this->Frostbite->login($password);
+            if ( ! $this->Frostbite->login($password)) {
+                return false;
+            }
         }
+
+        return true;
 
     }
 
